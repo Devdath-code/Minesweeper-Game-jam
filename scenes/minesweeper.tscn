@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c37duq4iam21u"]
+
+[ext_resource type="Script" path="res://Scripts/minesweeper.gd" id="1_y7uj4"]
+
+[node name="Minesweeper" type="TileMap"]
+format = 2
+script = ExtResource("1_y7uj4")
