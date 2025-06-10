@@ -19,6 +19,9 @@ var hover_layer : int = 5
 #atlas coordinates
 var mine_atlas := Vector2i(4, 0)
 var clue_atlas := Vector2i(0,0)
+var number_atlas : Array = generate_number_atlas()
+var hover_atlas := Vector2i(6,0)
+var flag_atlas := Vector2i(5,0)
 
 #array to store mine coordinates
 var mine_coords := []
@@ -26,6 +29,11 @@ var mine_coords := []
 #array to store clue coordinates
 var clues_coords := []
 
+func generate_number_atlas():
+	var a := []
+	for i in range(8):
+		a.append(Vector2i(i,1))
+	return a
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	new_game()
@@ -34,9 +42,11 @@ func _ready():
 func new_game():
 	clear()
 	mine_coords.clear()
+	clues_coords.clear()
 	generate_mines()
 	generate_clues()
 	generate_numbers()
+	generate_grass()
 	
 func generate_mines():
 	for i in range(MainMinesweeper.TOTAL_MINES):
@@ -60,11 +70,22 @@ func generate_clues():
 			generate_clues()
 			
 func generate_numbers():
-	#get empty cells
-	get_empty_cells()
-	#iterate through empty cells to find the surrounding cells 
-	#add up number of mines inside surrounding cells 
-	pass 
+	for i in get_empty_cells(): 
+		var mine_count: int = 0
+		for j in get_all_surrounding_cells(i):
+			#check if there is a mine in the cell 
+			if is_mine(j):
+				mine_count += 1
+		#once counted, add the number cell to the tile map 
+		if mine_count > 0:
+				set_cell(number_layer,i,tile_id,number_atlas[mine_count-1])
+
+func generate_grass():
+	for y in range(ROWS):
+		for x in range(COLS):
+			var toggle = ((x+y) % 2)
+			set_cell(grass_layer, Vector2i(x,y), tile_id, Vector2i(3-toggle,0))
+
 func get_empty_cells():
 	var empty_cells := []
 	#iterate over the grid
@@ -75,13 +96,86 @@ func get_empty_cells():
 			if not is_mine(pos):
 				if not is_clue(pos):
 					empty_cells.append(pos)
-	print("Empty cells found: ", empty_cells.size())
-	print("Empty cells: ", empty_cells)
 	return empty_cells
 	
+func get_all_surrounding_cells(middle_cell):
+	var surrounding_cells := []
+	var target_cell
+	for y in range(3):
+		for x in range(3):
+			target_cell = middle_cell + Vector2i(x-1,y-1 )
+			#skip if it is one in the middle
+			if target_cell != middle_cell:
+				#check that the cell is on the grid
+				if (target_cell.x>=0 and target_cell.x<= COLS -1
+					and target_cell.y>=0 and target_cell.y<= ROWS -1):
+					surrounding_cells.append(target_cell)
+	return surrounding_cells
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+func _input(event):
+	if event is InputEventMouseButton:
+		#check if mouse is on the gameboard
+		if event.position.y < ROWS * CELL_SIZE:
+			var map_pos := local_to_map(event.position)
+			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				#check there is no flag
+				if not is_flag(map_pos):
+					#check if it is a mine
+					if is_mine(map_pos):
+						print("Game Over")
+					else:
+						process_left_click(map_pos)
+			#right click places and removes flags 
+			elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+				process_right_click(map_pos)
+				
+func process_left_click(pos):
+	var revealed_cells := []
+	var cells_to_reveal := [pos]
+	while not cells_to_reveal.is_empty():
+		#clear the cell and mark it cleared 
+		erase_cell(grass_layer,cells_to_reveal[0])
+		revealed_cells.append(cells_to_reveal[0])
+		#if the cells had a flag then clear it 
+		if is_flag(cells_to_reveal[0]):
+			erase_cell(flag_layer,cells_to_reveal[0])
+		if not is_number(cells_to_reveal[0]):
+			cells_to_reveal = reveal_surrounding_cells(cells_to_reveal,revealed_cells)
+		#remove processed cell from array 
+		cells_to_reveal.erase(cells_to_reveal[0])
+
+func process_right_click(pos):
+	#check if its a grass cell
+	if is_grass(pos):
+		if is_flag(pos):
+			erase_cell(flag_layer,pos)
+		else:
+			set_cell(flag_layer,pos,tile_id,flag_atlas)
+
+func reveal_surrounding_cells(cells_to_reveal, revealed_cells):
+	for i in get_all_surrounding_cells(cells_to_reveal[0]):
+		#check that the cell is not already revealed
+		if not revealed_cells.has(i):
+			if not cells_to_reveal.has(i):
+				cells_to_reveal.append(i)
+	return cells_to_reveal 
+
 func _process(delta):
-	pass
+	highlight_cell()
+	
+
+func highlight_cell():
+	var mouse_pos := local_to_map(get_local_mouse_position())
+	#clear hover tiles and add fresh one under the mouse
+	clear_layer(hover_layer)
+	#hover over grass cells 
+	if is_grass(mouse_pos):
+		set_cell(hover_layer,mouse_pos,tile_id,hover_atlas)
+	else:
+		#if the cell is cleared then only hover over number cell
+		if is_number(mouse_pos):
+			set_cell(hover_layer,mouse_pos,tile_id,hover_atlas)
+
 
 #helper functions
 func is_mine(pos):
@@ -89,4 +183,12 @@ func is_mine(pos):
 
 func is_clue(pos):
 	return get_cell_source_id(clue_layer,pos) != -1 
-		
+
+func is_grass(pos):
+	return get_cell_source_id(grass_layer,pos) != -1 
+
+func is_number(pos):
+	return get_cell_source_id(number_layer,pos) != -1 
+	
+func is_flag(pos):
+	return get_cell_source_id(flag_layer,pos) != -1 

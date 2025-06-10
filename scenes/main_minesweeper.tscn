@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bk5cdmnou8q28"]
+[gd_scene load_steps=5 format=3 uid="uid://bk5cdmnou8q28"]
 
 [ext_resource type="Script" path="res://Scripts/main_minesweeper.gd" id="1_jjap2"]
 [ext_resource type="Texture2D" uid="uid://b2l7fe8ib6b3a" path="res://sprites/bg.png" id="1_uhocj"]
 [ext_resource type="PackedScene" uid="uid://b4dsmj0nqv4il" path="res://scenes/tile_map.tscn" id="3_e45tw"]
+[ext_resource type="PackedScene" uid="uid://2fbk1w4bye0n" path="res://scenes/hud.tscn" id="4_xy6dj"]
 
 [node name="Main_minesweeper" type="Node"]
 script = ExtResource("1_jjap2")
@@ -12,3 +13,5 @@ texture = ExtResource("1_uhocj")
 offset = Vector2(375, 350)
 
 [node name="TileMap" parent="." instance=ExtResource("3_e45tw")]
+
+[node name="HUD" parent="." instance=ExtResource("4_xy6dj")]
