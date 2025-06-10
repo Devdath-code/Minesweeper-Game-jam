@@ -1,6 +1,7 @@
 
 extends TileMap
 
+#-2 = clue cell
 # -1 = empty cell
 # 0 = mine
 # 1-8 = number tile
@@ -8,7 +9,8 @@ extends TileMap
 const CELL_ROWS := 30
 const CELL_COLUMNS := 16
 # Don't set mines too high or it will lag/crash the game
-const MINE_COUNT := 99
+const MINE_COUNT := 40
+const CLUE_COUNT := 1
 
 var gameEnded := false
 var offsetCoords : Vector2i
@@ -28,6 +30,11 @@ func newGame() -> void:
 			cells.append(-1)
 
 
+func setUpClues(avoid : Vector2i) -> void:
+	for i in range(CLUE_COUNT):
+		cells[i] = -2
+	
+	cells.shuffle()
 
 func setUpMines(avoid : Vector2i) -> void:
 	for i in range(MINE_COUNT):
@@ -93,6 +100,7 @@ func revealCell(cellCoords : Vector2i) -> void:
 	
 	var atlasCoords : Vector2i
 	match cells[cellIndex]:
+		-2: atlasCoords = Vector2i(2,3) #supposed to be clue tile
 		-1: atlasCoords = Vector2i(3,0) # Empty cell
 		0: atlasCoords = Vector2i(0,3) # Mine
 		1: atlasCoords = Vector2i(0, 1) # Number cells
