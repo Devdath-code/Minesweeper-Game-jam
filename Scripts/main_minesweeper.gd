@@ -68,6 +68,8 @@ func end_game(result):
 		if $GameOver != null:
 			$GameOver.get_node("Label").text = "YOU WIN!"
 			won.play()
+			await get_tree().create_timer(2.0).timeout
+			get_tree().change_scene_to_file("res://scenes/vn_2.tscn")
 		else:
 			pass
 	else:

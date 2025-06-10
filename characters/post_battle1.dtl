@@ -1,0 +1,12 @@
+[wait time="2.0"]
+[music path="res://sprites/Minesweeper game music/8-bit-arcade-mode-158814.mp3" fade="0.0" volume="0.0"]
+[background arg="res://sprites/Backgrounds/images.jpeg" fade="0.0"]
+Narator: Congrats on Solving the puzzle[Due to time constraints, game was cut to only 1 clue to find instead of 5]
+join Pizza_Guy center
+Pizza_Guy (talking): THANK YOU SOO MUCH \
+
+Pizza_Guy (talking): You have saved me 
+leave Pizza_Guy [animation="Fade Out"]
+join constables center
+constables: Well Detective you have solved the case again
+[signal arg="end_game"]

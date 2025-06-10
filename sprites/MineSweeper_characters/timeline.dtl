@@ -1,0 +1,29 @@
+[background arg="res://sprites/Backgrounds/detective house.jpg" fade="0.0"]
+[music path="res://sprites/Minesweeper game music/8-bit-arcade-mode-158814.mp3" fade="0.0" volume="-12.0"]
+join constables (normal) center [animation="Slide In Left"]
+constables (normal): YO! Detective. How are you?
+- Im good
+constables (explaining): That's Nice. There has been a little trouble in the town though
+- What is it?
+constables (explaining): Well All the Town's Pineapples are missing
+- What, who would do such a thing
+	constables (explaining): I have no clue, The pizza shop down the road might be of help though.
+- you have any clues
+	constables (explaining): The pizza shop down the road might be of help.
+leave constables [animation="Slide Out Right"]
+[background arg="res://sprites/Backgrounds/images.jpeg" fade="0.0"]
+join constables (normal) center [animation="Slide In Left"]
+constables (normal): Here we are...
+- Ohhh the Pizza Shop Owner
+leave constables [animation="Fade Out" length="1.5" wait="true"]
+join Pizza_Guy center [animation="Slide In Left"]
+Pizza_Guy (nromal): Hello, you must be the Detective
+Pizza_Guy (talking): Ohh Please Help us. Our most popular pizza is Pineapple on Pizza and all the towns pineapple are missing.
+- Definetly! Could you explain when this happened and anything that might have happened the day before that
+	<Empty Text Event>
+	<Empty Text Event>
+leave Pizza_Guy
+Narator: To find Clues, You need to find the Red tile in a Game of MineSweeper.
+Narator: All the other rules are the same
+Narator: uncover the red tile and get the Clue.
+[signal arg="start_game"]

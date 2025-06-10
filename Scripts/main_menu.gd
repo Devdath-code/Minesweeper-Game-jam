@@ -14,7 +14,8 @@ func _process(delta):
 
 func _on_start_game_pressed():
 	click.play()
-	get_tree().change_scene_to_file("res://scenes/main_minesweeper.tscn")
+	Dialogic.VAR.returning_from_game = false
+	get_tree().change_scene_to_file("res://scenes/visual_novel.tscn")
 	
 
 func _on_exit_pressed():
