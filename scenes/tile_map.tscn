@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4dsmj0nqv4il"]
+
+[ext_resource type="Texture2D" uid="uid://coe3uwo7eljf5" path="res://sprites/Tileset.png" id="1_p125f"]
+[ext_resource type="Script" path="res://Scripts/tile_map.gd" id="2_oe2nf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3avg8"]
+texture = ExtResource("1_p125f")
+texture_region_size = Vector2i(50, 50)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/1 = 1
+0:0/1/modulate = Color(1, 0, 0, 1)
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_5qelq"]
+tile_size = Vector2i(50, 50)
+sources/1 = SubResource("TileSetAtlasSource_3avg8")
+
+[node name="TileMap" type="TileMap"]
+tile_set = SubResource("TileSet_5qelq")
+format = 2
+layer_0/name = "Clues"
+layer_1/name = "Mines"
+layer_2/name = "Numbers"
+layer_3/name = "Grass"
+layer_4/name = "Hover"
+layer_5/name = "Flags"
+script = ExtResource("2_oe2nf")

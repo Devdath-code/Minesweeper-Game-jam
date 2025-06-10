@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="PAUSCHE-Minesweeper-game-jam"
-run/main_scene="res://scenes/minesweeper.tscn"
+run/main_scene="res://scenes/main_minesweeper.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 
+[autoload]
+
+MainMinesweeper="*res://Scripts/main_minesweeper.gd"
+
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=510
+window/size/viewport_width=750
+window/size/viewport_height=750
 window/stretch/mode="canvas_items"
 
 [editor]
