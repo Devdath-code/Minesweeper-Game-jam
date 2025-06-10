@@ -1,11 +1,13 @@
 extends Node
 
 #game variables
-const TOTAL_MINES : int = 20
+const TOTAL_MINES : int = 30
 const TOTAL_CLUES : int = 1
 var time_elapsed  : float
 var remaining_mines : int
 var remaining_clues : int
+@onready var boom = $BOOM
+@onready var won = $WON
 
 #signals 
 signal timer_end
@@ -65,11 +67,13 @@ func end_game(result):
 	if result == 1:
 		if $GameOver != null:
 			$GameOver.get_node("Label").text = "YOU WIN!"
+			won.play()
 		else:
 			pass
 	else:
 		if $GameOver != null:
 			$GameOver.get_node("Label").text = "BOOM!"
+			boom.play()
 		else:
 			pass
 			

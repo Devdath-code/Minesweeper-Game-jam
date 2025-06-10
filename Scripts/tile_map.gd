@@ -9,6 +9,7 @@ signal game_won
 const ROWS : int = 14
 const COLS : int = 15
 const CELL_SIZE : int = 50
+@onready var tile_click = $tile_click
 
 #tilemap variables
 var tile_id : int = 1
@@ -132,9 +133,11 @@ func _input(event):
 						show_clues()
 					else:
 						process_left_click(map_pos)
+						tile_click.play()
 			#right click places and removes flags 
 			elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 				process_right_click(map_pos)
+				tile_click.play()
 				
 func process_left_click(pos):
 	var revealed_cells := []

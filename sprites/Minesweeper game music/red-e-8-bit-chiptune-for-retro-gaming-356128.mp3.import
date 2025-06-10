@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://i2if3n30auc7"
+path="res://.godot/imported/red-e-8-bit-chiptune-for-retro-gaming-356128.mp3-931628e93393916d0de73846977d8157.mp3str"
+
+[deps]
+
+source_file="res://sprites/Minesweeper game music/red-e-8-bit-chiptune-for-retro-gaming-356128.mp3"
+dest_files=["res://.godot/imported/red-e-8-bit-chiptune-for-retro-gaming-356128.mp3-931628e93393916d0de73846977d8157.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

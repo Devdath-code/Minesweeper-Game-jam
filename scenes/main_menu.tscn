@@ -1,0 +1,118 @@
+[gd_scene load_steps=8 format=3 uid="uid://vi7nw1vjk42i"]
+
+[ext_resource type="Texture2D" uid="uid://nvpjv0u81p53" path="res://sprites/bg_mainmenu.png" id="1_fachj"]
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_pfd6i"]
+[ext_resource type="Texture2D" uid="uid://cdk0ynmqp64r2" path="res://sprites/puzzle-name.png" id="2_ynkg1"]
+[ext_resource type="FontFile" uid="uid://com7ky473i3bp" path="res://sprites/MiniPuzzleDemoRegular.ttf" id="3_nttnf"]
+[ext_resource type="AudioStream" uid="uid://1cbguf0hyksj" path="res://sprites/Minesweeper game music/8-bit-arcade-mode-158814.mp3" id="5_o2efw"]
+[ext_resource type="AudioStream" uid="uid://ccss243md6w8y" path="res://sprites/Minesweeper game music/blipSelect.wav" id="6_fpwtf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_43yos"]
+bg_color = Color(0.72549, 0.388235, 0.0901961, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.223103, 0.223103, 0.223103, 0.6)
+
+[node name="Main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pfd6i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(377.5, 376)
+scale = Vector2(0.71592, 0.770021)
+texture = ExtResource("1_fachj")
+
+[node name="Puzzle-name" type="Sprite2D" parent="."]
+position = Vector2(240, 147)
+scale = Vector2(0.15025, 0.117375)
+texture = ExtResource("2_ynkg1")
+
+[node name="start_game" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -63.0
+offset_right = 175.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_43yos")
+text = "Start Game"
+
+[node name="options" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = 147.0
+offset_right = 178.0
+offset_bottom = 227.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_43yos")
+text = "Exit
+"
+
+[node name="exit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = 42.0
+offset_right = 180.0
+offset_bottom = 122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_43yos")
+text = "Options"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -325.0
+offset_top = 118.0
+offset_right = 325.0
+offset_bottom = 293.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.934016, 0.414947, 0.167106, 1)
+theme_override_fonts/font = ExtResource("3_nttnf")
+theme_override_font_sizes/font_size = 100
+text = "CLUESWEEPER
+"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_o2efw")
+autoplay = true
+
+[node name="click" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("6_fpwtf")
+
+[connection signal="pressed" from="start_game" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]

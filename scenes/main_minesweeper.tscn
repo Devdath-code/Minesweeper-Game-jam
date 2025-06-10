@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk5cdmnou8q28"]
+[gd_scene load_steps=9 format=3 uid="uid://bk5cdmnou8q28"]
 
 [ext_resource type="Script" path="res://Scripts/main_minesweeper.gd" id="1_jjap2"]
 [ext_resource type="Texture2D" uid="uid://b2l7fe8ib6b3a" path="res://sprites/bg.png" id="1_uhocj"]
 [ext_resource type="PackedScene" uid="uid://b4dsmj0nqv4il" path="res://scenes/tile_map.tscn" id="3_e45tw"]
 [ext_resource type="PackedScene" uid="uid://2fbk1w4bye0n" path="res://scenes/hud.tscn" id="4_xy6dj"]
 [ext_resource type="PackedScene" uid="uid://i8onp43anefn" path="res://scenes/game_over.tscn" id="5_5qn4n"]
+[ext_resource type="AudioStream" uid="uid://2qsepdca3teo" path="res://sprites/Minesweeper game music/chiptune-hard-boss-mode-218071.mp3" id="6_gbf0v"]
+[ext_resource type="AudioStream" uid="uid://cxxw260ghap06" path="res://sprites/Minesweeper game music/explosion.wav" id="7_xpotr"]
+[ext_resource type="AudioStream" uid="uid://ojpverpqlbsk" path="res://sprites/Minesweeper game music/powerUp.wav" id="8_r0gk0"]
 
 [node name="Main_minesweeper" type="Node"]
 script = ExtResource("1_jjap2")
@@ -19,6 +22,18 @@ offset = Vector2(375, 350)
 
 [node name="GameOver" parent="." instance=ExtResource("5_5qn4n")]
 process_mode = 2
+
+[node name="backgriound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_gbf0v")
+autoplay = true
+
+[node name="BOOM" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("7_xpotr")
+
+[node name="WON" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("8_r0gk0")
 
 [connection signal="timer_end" from="." to="." method="_on_timer_end"]
 [connection signal="end_game" from="TileMap" to="." method="_on_tile_map_end_game"]

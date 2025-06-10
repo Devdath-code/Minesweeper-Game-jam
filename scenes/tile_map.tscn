@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4dsmj0nqv4il"]
+[gd_scene load_steps=6 format=3 uid="uid://b4dsmj0nqv4il"]
 
 [ext_resource type="Texture2D" uid="uid://coe3uwo7eljf5" path="res://sprites/Tileset.png" id="1_p125f"]
 [ext_resource type="Script" path="res://Scripts/tile_map.gd" id="2_oe2nf"]
+[ext_resource type="AudioStream" uid="uid://ccss243md6w8y" path="res://sprites/Minesweeper game music/blipSelect.wav" id="3_jijqe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3avg8"]
 texture = ExtResource("1_p125f")
@@ -41,3 +42,6 @@ layer_3/name = "Grass"
 layer_4/name = "Hover"
 layer_5/name = "Flags"
 script = ExtResource("2_oe2nf")
+
+[node name="tile_click" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jijqe")

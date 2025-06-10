@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cxxw260ghap06"
+path="res://.godot/imported/explosion.wav-6dbfde851eab669fffed18562de12cca.sample"
+
+[deps]
+
+source_file="res://sprites/Minesweeper game music/explosion.wav"
+dest_files=["res://.godot/imported/explosion.wav-6dbfde851eab669fffed18562de12cca.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
