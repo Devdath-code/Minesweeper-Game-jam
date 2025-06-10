@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk5cdmnou8q28"]
+[gd_scene load_steps=6 format=3 uid="uid://bk5cdmnou8q28"]
 
 [ext_resource type="Script" path="res://Scripts/main_minesweeper.gd" id="1_jjap2"]
 [ext_resource type="Texture2D" uid="uid://b2l7fe8ib6b3a" path="res://sprites/bg.png" id="1_uhocj"]
 [ext_resource type="PackedScene" uid="uid://b4dsmj0nqv4il" path="res://scenes/tile_map.tscn" id="3_e45tw"]
 [ext_resource type="PackedScene" uid="uid://2fbk1w4bye0n" path="res://scenes/hud.tscn" id="4_xy6dj"]
+[ext_resource type="PackedScene" uid="uid://i8onp43anefn" path="res://scenes/game_over.tscn" id="5_5qn4n"]
 
 [node name="Main_minesweeper" type="Node"]
 script = ExtResource("1_jjap2")
@@ -15,3 +16,13 @@ offset = Vector2(375, 350)
 [node name="TileMap" parent="." instance=ExtResource("3_e45tw")]
 
 [node name="HUD" parent="." instance=ExtResource("4_xy6dj")]
+
+[node name="GameOver" parent="." instance=ExtResource("5_5qn4n")]
+process_mode = 2
+
+[connection signal="timer_end" from="." to="." method="_on_timer_end"]
+[connection signal="end_game" from="TileMap" to="." method="_on_tile_map_end_game"]
+[connection signal="flag_placed" from="TileMap" to="." method="_on_tile_map_flag_placed"]
+[connection signal="flag_removed" from="TileMap" to="." method="_on_tile_map_flag_removed"]
+[connection signal="game_won" from="TileMap" to="." method="_on_tile_map_game_won"]
+[connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]

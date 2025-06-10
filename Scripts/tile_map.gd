@@ -1,5 +1,10 @@
 extends TileMap
 
+signal flag_placed
+signal flag_removed
+signal end_game
+signal game_won
+
 #grid variables
 const ROWS : int = 14
 const COLS : int = 15
@@ -122,7 +127,9 @@ func _input(event):
 				if not is_flag(map_pos):
 					#check if it is a mine
 					if is_mine(map_pos):
-						print("Game Over")
+						end_game.emit()
+						show_mines()
+						show_clues()
 					else:
 						process_left_click(map_pos)
 			#right click places and removes flags 
@@ -139,18 +146,28 @@ func process_left_click(pos):
 		#if the cells had a flag then clear it 
 		if is_flag(cells_to_reveal[0]):
 			erase_cell(flag_layer,cells_to_reveal[0])
+			flag_removed.emit()
 		if not is_number(cells_to_reveal[0]):
 			cells_to_reveal = reveal_surrounding_cells(cells_to_reveal,revealed_cells)
 		#remove processed cell from array 
 		cells_to_reveal.erase(cells_to_reveal[0])
-
+	#once click is processed, check if clue tile is shown
+	var clue_tile_shown := true
+	for cell in get_used_cells(clue_layer):
+		if is_grass(cell):
+			clue_tile_shown = false
+	if clue_tile_shown:
+		game_won.emit()
+	 
 func process_right_click(pos):
 	#check if its a grass cell
 	if is_grass(pos):
 		if is_flag(pos):
 			erase_cell(flag_layer,pos)
+			flag_removed.emit()
 		else:
 			set_cell(flag_layer,pos,tile_id,flag_atlas)
+			flag_placed.emit()
 
 func reveal_surrounding_cells(cells_to_reveal, revealed_cells):
 	for i in get_all_surrounding_cells(cells_to_reveal[0]):
@@ -160,7 +177,18 @@ func reveal_surrounding_cells(cells_to_reveal, revealed_cells):
 				cells_to_reveal.append(i)
 	return cells_to_reveal 
 
-func _process(delta):
+func show_mines():
+	for mine in mine_coords:
+		if is_mine(mine):
+			erase_cell(grass_layer,mine)
+
+func show_clues():
+	for clue in clues_coords:
+		if is_clue(clue):
+			erase_cell(grass_layer,clue)
+			
+			
+func _process(_delta):
 	highlight_cell()
 	
 
